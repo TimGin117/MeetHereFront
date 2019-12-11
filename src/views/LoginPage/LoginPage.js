@@ -20,10 +20,11 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
-import image from "assets/img/bg7.jpg";
+import image from "assets/img/bg8.jpg";
 
 const useStyles = makeStyles(styles);
 
+//TODO:优化密码input开关显示，增加helperText
 export default function LoginPage(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
@@ -32,9 +33,8 @@ export default function LoginPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
 
-  const handleLogin = e => {
-    e.preventDefault();
-    console.log("login");
+  const handleLogin = () => {
+    rest.history.push("/profile");
   };
 
   return (
@@ -60,7 +60,7 @@ export default function LoginPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h4>Login</h4>
+                    <h3>Login</h3>
                     <div className={classes.socialLine}>
                       <Button
                         justIcon

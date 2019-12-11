@@ -78,6 +78,12 @@ const signupPageStyle = {
     borderRadius: "6px",
     justifyContent: "center !important"
   },
+  cardTitle: {
+    margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    marginTop: ".625rem",
+    textAlign: "center"
+  },
   socialLine: {
     marginTop: "1rem",
     textAlign: "center",
