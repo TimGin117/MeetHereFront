@@ -1,26 +1,41 @@
+/*!
+
+=========================================================
+* Material Dashboard React - v1.8.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/material-dashboard-react
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
 import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 
-import "assets/scss/material-kit-react.scss?v=1.8.0";
-
-// pages for this product
-import Components from "views/Components/Components.js";
-import ProfilePage from "views/ProfilePage/ProfilePage.js";
+// core components
+import BasicLayout from "layouts/BasicLayout.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
 import RegisterPage from "views/RegisterPage/RegisterPage.js";
 
-var hist = createBrowserHistory();
+import "assets/css/material-dashboard-react.css?v=1.8.0";
+
+const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      <Redirect exact from="/" to="/login" />
+      <Route path="/admin" component={BasicLayout} />
       <Route path="/login" component={LoginPage} />
       <Route path="/register" component={RegisterPage} />
-      <Route path="/profile" component={ProfilePage} />
-      <Route path="/component" component={Components} />
+      <Redirect from="/" to="/login" />
     </Switch>
   </Router>,
   document.getElementById("root")

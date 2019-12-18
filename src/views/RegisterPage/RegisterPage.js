@@ -70,7 +70,9 @@ export default function RegisterPage(props) {
 
   const [state, dispatch] = React.useReducer(registerReducer, initialState);
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm({
+    mode: "onBlur"
+  });
 
   //处理input框onChange事件
   const handleChange = prop => e => {
@@ -132,6 +134,7 @@ export default function RegisterPage(props) {
                       error={!!errors.username}
                       inputProps={{
                         type: "text",
+                        placeholder: "用户名(不超过16位)",
                         name: "username",
                         inputRef: register({
                           required: true,
@@ -145,6 +148,7 @@ export default function RegisterPage(props) {
                         ),
                         onChange: handleChange("username")
                       }}
+                      helperText={errors.username && "Username Invalid"} //配合inputRef的register
                     />
                     <CustomInput
                       labelText="Password"
@@ -152,8 +156,10 @@ export default function RegisterPage(props) {
                       formControlProps={{
                         fullWidth: true
                       }}
+                      error={!!errors.password}
                       inputProps={{
                         type: state.showPassword ? "text" : "password",
+                        placeholder: "密码（8-16位数字、字母）",
                         name: "password",
                         inputRef: register({
                           required: true,
@@ -184,6 +190,7 @@ export default function RegisterPage(props) {
                         autoComplete: "off",
                         onChange: handleChange("password")
                       }}
+                      helperText={errors.password && "Password Invalid"} //配合inputRef的register
                     />
                     <CustomInput
                       labelText="Repeat Password"
@@ -191,13 +198,14 @@ export default function RegisterPage(props) {
                       formControlProps={{
                         fullWidth: true
                       }}
+                      error={!!errors.repeatPassword}
                       inputProps={{
                         type: state.showRepeatPassword ? "text" : "password",
+                        placeholder: "重复密码",
                         name: "repeatPassword",
                         inputRef: register({
                           required: true,
-                          minLength: 8,
-                          maxLength: 16
+                          validate: value => value === state.password
                         }),
                         startAdornment: (
                           <InputAdornment position="start">
@@ -223,6 +231,9 @@ export default function RegisterPage(props) {
                         autoComplete: "off",
                         onChange: handleChange("repeatPassword")
                       }}
+                      helperText={
+                        errors.repeatPassword && "Repeat Password Invalid"
+                      } //配合inputRef的register
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
