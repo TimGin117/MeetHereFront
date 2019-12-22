@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import People from "@material-ui/icons/People";
+import Email from "@material-ui/icons/Email";
 // core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
@@ -21,11 +21,35 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/bg8.jpg";
+import { post } from "axiosSetting.js";
 
 const useStyles = makeStyles(styles);
 
-//TODO:优化密码input开关显示，增加helperText
+const initialState = {
+  email: "",
+  password: ""
+};
+
+const loginReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "INPUT_CHANGE":
+      return {
+        ...state,
+        [payload.key]: payload.value
+      };
+    default:
+      return state;
+  }
+};
+
 export default function LoginPage(props) {
+  const [state, dispatch] = React.useReducer(loginReducer, initialState);
+
+  //返回登陆页清除sessionStorage
+  React.useEffect(() => window.sessionStorage.clear());
+
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   setTimeout(function() {
     setCardAnimation("");
@@ -33,8 +57,28 @@ export default function LoginPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
 
-  const handleLogin = () => {
-    rest.history.push("/admin");
+  const handleChange = prop => e => {
+    dispatch({
+      type: "INPUT_CHANGE",
+      payload: { key: prop, value: e.target.value }
+    });
+  };
+
+  const handleLogin = async () => {
+    const body = {
+      email: state.email,
+      password: state.password
+    };
+    let res = await post("/api/user/login", body);
+
+    if (res && res.code === 0) {
+      console.log(res);
+      //保存token
+      const { token, ...restData } = res.data;
+      window.sessionStorage.setItem("token", token);
+      window.sessionStorage.setItem("user", JSON.stringify(restData));
+      rest.history.push("/user");
+    }
   };
 
   return (
@@ -64,8 +108,8 @@ export default function LoginPage(props) {
                   </CardHeader>
                   <CardBody>
                     <CustomInput
-                      labelText="Username"
-                      id="username"
+                      labelText="Email"
+                      id="email"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -73,9 +117,10 @@ export default function LoginPage(props) {
                         type: "text",
                         endAdornment: (
                           <InputAdornment position="end">
-                            <People className={classes.inputIconsColor} />
+                            <Email className={classes.inputIconsColor} />
                           </InputAdornment>
-                        )
+                        ),
+                        onChange: handleChange("email")
                       }}
                     />
                     <CustomInput
@@ -93,7 +138,8 @@ export default function LoginPage(props) {
                             </Icon>
                           </InputAdornment>
                         ),
-                        autoComplete: "off"
+                        autoComplete: "off",
+                        onChange: handleChange("password")
                       }}
                     />
                   </CardBody>

@@ -91,6 +91,10 @@ const signupPageStyle = {
   },
   inputIconsColor: {
     color: "#495057"
+  },
+  sendCode: {
+    marginBottom: ".925rem",
+    marginRight: ".125rem"
   }
 };
 
