@@ -12,7 +12,8 @@ const modalStyle = {
   },
   modalTitle: {
     margin: "0",
-    lineHeight: "1.42857143"
+    lineHeight: "0px",
+    fontWeight: "600"
   },
   modalCloseButton: {
     color: "#999999",
@@ -30,8 +31,8 @@ const modalStyle = {
     float: "right"
   },
   modalClose: {
-    width: "16px",
-    height: "16px"
+    width: "20px",
+    height: "20px"
   },
   modalBody: {
     paddingTop: "24px",
@@ -49,6 +50,20 @@ const modalStyle = {
   modalFooterCenter: {
     marginLeft: "auto",
     marginRight: "auto"
+  },
+  modalFooterLabel: {
+    fontSize: "13px",
+    fontWeight: "450"
+  },
+  form: {
+    margin: "0"
+  },
+  inputIconsColor: {
+    color: "#495057"
+  },
+  sendCode: {
+    marginBottom: ".925rem",
+    marginRight: ".125rem"
   }
 };
 

@@ -21,7 +21,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 
 import image from "assets/img/bg8.jpg";
-import { post } from "axiosSetting.js";
+import { postJSON } from "axiosSetting.js";
 
 const useStyles = makeStyles(styles);
 
@@ -69,10 +69,9 @@ export default function LoginPage(props) {
       email: state.email,
       password: state.password
     };
-    let res = await post("/api/user/login", body);
+    let res = await postJSON("/api/user/login", body);
 
     if (res && res.code === 0) {
-      console.log(res);
       //保存token
       const { token, ...restData } = res.data;
       window.sessionStorage.setItem("token", token);

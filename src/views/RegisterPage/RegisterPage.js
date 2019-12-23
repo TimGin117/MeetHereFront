@@ -26,7 +26,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
 import image from "assets/img/bg8.jpg";
 
-import { get, post } from "axiosSetting.js";
+import { get, postJSON } from "axiosSetting.js";
 import useForm from "react-hook-form";
 
 const useStyles = makeStyles(styles);
@@ -90,16 +90,16 @@ export default function RegisterPage(props) {
   const { register, handleSubmit, errors } = useForm({ mode: "onBlur" });
 
   //处理input框onChange事件
-  const handleChange = prop => e => {
+  const handleChange = key => e => {
     dispatch({
       type: "INPUT_CHANGE",
-      payload: { key: prop, value: e.target.value }
+      payload: { key: key, value: e.target.value }
     });
   };
 
   //处理toggle类型的button的onClick事件
-  const handleToggle = prop => () => {
-    dispatch({ type: "TOGGLE_BUTTON", payload: { key: prop } });
+  const handleToggle = key => () => {
+    dispatch({ type: "TOGGLE_BUTTON", payload: { key: key } });
   };
 
   //注册
@@ -113,7 +113,7 @@ export default function RegisterPage(props) {
       password: password
     };
 
-    let res = await post("/api/user/register", body);
+    let res = await postJSON("/api/user/register", body);
     if (res && res.code === 0) rest.history.push("/login");
   };
 

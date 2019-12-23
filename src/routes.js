@@ -18,28 +18,28 @@ const adminRoutes = [
     name: "Dashboard",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
+    layout: "/user"
   },
   {
     path: "/profile",
     name: "User Profile",
     icon: Person,
     component: UserProfilePage,
-    layout: "/admin"
+    layout: "/user"
   },
   {
     path: "/table",
     name: "Table List",
     icon: "content_paste",
     component: TableList,
-    layout: "/admin"
+    layout: "/user"
   },
   {
     path: "/typography",
     name: "Typography",
     icon: LibraryBooks,
     component: Typography,
-    layout: "/admin"
+    layout: "/user"
   }
 ];
 

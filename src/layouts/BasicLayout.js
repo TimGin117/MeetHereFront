@@ -44,7 +44,7 @@ export default function BasicLayout({ ...rest }) {
   let switchRoutes = (
     <Switch>
       {routes.map((prop, key) => {
-        if (prop.layout === "/user" || prop.layout === "/admin") {
+        if (prop.layout === "/user") {
           let path = prop.layout + prop.path;
           return <Route path={path} component={prop.component} key={key} />;
         }
