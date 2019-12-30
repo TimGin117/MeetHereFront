@@ -29,7 +29,7 @@ export default function CustomDialog(props) {
     form = false,
     onSubmit,
     open,
-    content,
+    content = "content",
     titleText = "Dialog",
     confirmText = "Confirm",
     closeText = "Close",
@@ -51,7 +51,7 @@ export default function CustomDialog(props) {
           className={classes.modalFooterLabel}
           color="primary"
           type={form ? "submit" : "button"}
-          onClick={onConfirm ? () => console.log("fuck") : onConfirm}
+          onClick={onConfirm}
           simple
         >
           {confirmText}
@@ -98,7 +98,7 @@ export default function CustomDialog(props) {
         </IconButton>
         <h4 className={classes.modalTitle}>{titleText}</h4>
       </DialogTitle>
-      {form ? <form onSubmit={onSubmit}>{element}</form> : { element }}
+      {form ? <form onSubmit={onSubmit}>{element}</form> : element}
     </Dialog>
   );
 }

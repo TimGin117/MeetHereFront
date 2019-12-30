@@ -29,6 +29,8 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
+        if (prop.icon === undefined) return null; //无icon页面不在siderbar显示
+
         var activePro = " ";
         var listItemClasses;
 

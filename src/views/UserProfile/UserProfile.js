@@ -25,10 +25,10 @@ import CardBody from "components/Card/CardBody.js";
 import CustomDialog from "components/CustomDialog/CustomDialog.js";
 import Button from "components/CustomButtons/Button.js";
 
-import avatar from "assets/img/faces/marc.jpg";
 import useForm from "react-hook-form";
 //utils
 import { createObjectURL, revokeObjectURL } from "utils/fileURL.js";
+import { defaultUser } from "utils/defaultUtils.js";
 
 import { get, post, upload } from "axiosSetting.js";
 
@@ -67,13 +67,6 @@ const styles = {
 const codeREG = /^[0-9]{6}$/;
 
 const defalutCodeText = "SEND CODE";
-
-const defaultUser = {
-  role: "user",
-  nickname: "游客",
-  profile: avatar,
-  email: "xxxxxx@xxx"
-};
 
 const useStyles = makeStyles(styles);
 

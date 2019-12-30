@@ -11,8 +11,8 @@ const paginationStyle = {
   pagination: {
     display: "inline-block",
     paddingLeft: "0",
-    margin: "0 0 20px 0",
-    borderRadius: "4px"
+    borderRadius: "4px",
+    marginTop: "25px"
   },
   paginationItem: {
     display: "inline"
