@@ -66,7 +66,7 @@ const styles = {
 
 const codeREG = /^[0-9]{6}$/;
 
-const defalutCodeText = "SEND CODE";
+const defalutCodeText = "发送验证码";
 
 const useStyles = makeStyles(styles);
 
@@ -314,13 +314,13 @@ export default function UserProfile() {
       </GridContainer>
       <CustomDialog
         open={state.openNicknameDialog}
-        titleText="Edit"
+        titleText="修改昵称"
         onClose={handleCloseDialog("Nickname")}
         form
         onSubmit={handleNicknameSubmit(handleModifyNickname)}
         content={
           <CustomInput
-            labelText="Nickname"
+            labelText="昵称"
             id="nickname"
             formControlProps={{
               fullWidth: true
@@ -348,13 +348,13 @@ export default function UserProfile() {
       <CustomDialog
         onClose={handleCloseDialog("Password")}
         open={state.openPasswordDialog}
-        titleText="Edit"
+        titleText="修改密码"
         form
         onSubmit={handlePasswordSubmit(handleModifyPassword)}
         content={
           <div>
             <CustomInput
-              labelText="Code"
+              labelText="验证码"
               id="code"
               formControlProps={{
                 fullWidth: true
@@ -365,10 +365,10 @@ export default function UserProfile() {
                 placeholder: "6位数字验证码",
                 name: "code",
                 inputRef: passwordRegister({
-                  required: "this is required",
+                  required: "不能为空",
                   pattern: {
                     value: codeREG,
-                    message: "code is invalid"
+                    message: "验证码无效"
                   }
                 }),
                 endAdornment: (
@@ -388,7 +388,7 @@ export default function UserProfile() {
               helperText={passwordErrors.code && passwordErrors.code.message} //配合inputRef的register
             />
             <CustomInput
-              labelText="Password"
+              labelText="新密码"
               id="pass"
               formControlProps={{
                 fullWidth: true
@@ -396,17 +396,17 @@ export default function UserProfile() {
               error={!!passwordErrors.password}
               inputProps={{
                 type: state.showPassword ? "text" : "password",
-                placeholder: "密码（6-16位数字、字母）",
+                placeholder: "新密码（6-16位数字、字母）",
                 name: "password",
                 inputRef: passwordRegister({
-                  required: "this is required",
+                  required: "不能为空",
                   minLength: {
                     value: 6,
-                    message: "your password is too short"
+                    message: "密码太短"
                   },
                   maxLength: {
                     value: 16,
-                    message: "your password is too long"
+                    message: "密码太长"
                   }
                 }),
                 startAdornment: (

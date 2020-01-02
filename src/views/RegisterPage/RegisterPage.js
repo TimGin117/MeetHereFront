@@ -35,7 +35,7 @@ const useStyles = makeStyles(styles);
 const emailREG = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const codeREG = /^[0-9]{6}$/;
 
-const defalutCodeText = "SEND CODE";
+const defalutCodeText = "发送验证码";
 
 const initialState = {
   nickname: "",
@@ -142,12 +142,12 @@ export default function RegisterPage(props) {
     let res = await get("/api/user/check", { email: value });
     console.log(res);
     if (res && res.code === 0) isRegistered = false;
-    return !isRegistered || "email has been registerd";
+    return !isRegistered || "邮箱已被注册";
   };
 
   const handleCheckRepeatPassword = value => {
     let password = state.password || "";
-    return value === password || "two passwords are not the same";
+    return value === password || "两次密码不一致";
   };
 
   return (
@@ -176,9 +176,9 @@ export default function RegisterPage(props) {
                   onSubmit={handleSubmit(handleRegister)}
                 >
                   <CardBody>
-                    <h2 className={classes.cardTitle}>Register</h2>
+                    <h2 className={classes.cardTitle}>用户注册</h2>
                     <CustomInput
-                      labelText="Nickname"
+                      labelText="昵称"
                       id="nickname"
                       formControlProps={{
                         fullWidth: true
@@ -189,10 +189,10 @@ export default function RegisterPage(props) {
                         placeholder: "用户昵称(不超过20位)",
                         name: "nickname",
                         inputRef: register({
-                          required: "thie is required",
+                          required: "不能为空",
                           maxLength: {
                             value: 20,
-                            message: "your nickname is too long"
+                            message: "昵称太长"
                           }
                         }),
                         startAdornment: (
@@ -205,7 +205,7 @@ export default function RegisterPage(props) {
                       helperText={errors.nickname && errors.nickname.message} //配合inputRef的register
                     />
                     <CustomInput
-                      labelText="Email"
+                      labelText="电子邮箱"
                       id="email"
                       formControlProps={{
                         fullWidth: true
@@ -216,10 +216,10 @@ export default function RegisterPage(props) {
                         placeholder: "电子邮箱",
                         name: "email",
                         inputRef: register({
-                          required: "this is required",
+                          required: "不能为空",
                           pattern: {
                             value: emailREG,
-                            message: "email is invalid"
+                            message: "邮件格式不合法"
                           },
                           validate: handleCheckEmail
                         }),
@@ -233,7 +233,7 @@ export default function RegisterPage(props) {
                       helperText={errors.email && errors.email.message}
                     />
                     <CustomInput
-                      labelText="Code"
+                      labelText="验证码"
                       id="code"
                       formControlProps={{
                         fullWidth: true
@@ -244,10 +244,10 @@ export default function RegisterPage(props) {
                         placeholder: "6位数字验证码",
                         name: "code",
                         inputRef: register({
-                          required: "this is required",
+                          required: "不能为空",
                           pattern: {
                             value: codeREG,
-                            message: "code is invalid"
+                            message: "验证码格式不合法"
                           }
                         }),
                         startAdornment: (
@@ -273,7 +273,7 @@ export default function RegisterPage(props) {
                       helperText={errors.code && errors.code.message} //配合inputRef的register
                     />
                     <CustomInput
-                      labelText="Password"
+                      labelText="密码"
                       id="pass"
                       formControlProps={{
                         fullWidth: true
@@ -284,14 +284,14 @@ export default function RegisterPage(props) {
                         placeholder: "密码（6-16位数字、字母）",
                         name: "password",
                         inputRef: register({
-                          required: "this is required",
+                          required: "不能为空",
                           minLength: {
                             value: 6,
-                            message: "your password is too short"
+                            message: "密码太短"
                           },
                           maxLength: {
                             value: 16,
-                            message: "your password is too long"
+                            message: "密码太长"
                           }
                         }),
                         startAdornment: (
@@ -321,7 +321,7 @@ export default function RegisterPage(props) {
                       helperText={errors.password && errors.password.message} //配合inputRef的register
                     />
                     <CustomInput
-                      labelText="Repeat Password"
+                      labelText="重复密码"
                       id="repeat-pass"
                       formControlProps={{
                         fullWidth: true
@@ -332,7 +332,7 @@ export default function RegisterPage(props) {
                         placeholder: "重复密码",
                         name: "repeatPassword",
                         inputRef: register({
-                          required: "this is required",
+                          required: "不能为空",
                           validate: handleCheckRepeatPassword
                         }),
                         startAdornment: (
@@ -367,7 +367,7 @@ export default function RegisterPage(props) {
                   <CardFooter className={classes.cardFooter}>
                     <Button type="submit" color="primary" round>
                       <Favorite />
-                      REGISTER
+                      注册
                     </Button>
                   </CardFooter>
                 </form>

@@ -103,11 +103,11 @@ export default function LoginPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h3>Login</h3>
+                    <h3>登陆</h3>
                   </CardHeader>
                   <CardBody>
                     <CustomInput
-                      labelText="Email"
+                      labelText="电子邮箱"
                       id="email"
                       formControlProps={{
                         fullWidth: true
@@ -123,7 +123,7 @@ export default function LoginPage(props) {
                       }}
                     />
                     <CustomInput
-                      labelText="Password"
+                      labelText="密码"
                       id="pass"
                       formControlProps={{
                         fullWidth: true
@@ -149,7 +149,7 @@ export default function LoginPage(props) {
                       size="lg"
                       onClick={handleLogin}
                     >
-                      Get started
+                      开始
                     </Button>
                   </CardFooter>
                 </form>

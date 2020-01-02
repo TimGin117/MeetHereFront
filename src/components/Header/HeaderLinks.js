@@ -27,7 +27,7 @@ export default function HeaderLinks(props) {
         <Button color="transparent" className={classes.navLink}>
           <Link to="/login" className={classes.dropdownLink}>
             <Fingerprint className={classes.socialIcons} />
-            LOGIN
+            登陆
           </Link>
         </Button>
       </ListItem>
@@ -35,7 +35,7 @@ export default function HeaderLinks(props) {
         <Button color="transparent" className={classes.navLink}>
           <Link to="/register" className={classes.dropdownLink}>
             <PersonAdd className={classes.socialIcons} />
-            REGISTER
+            注册
           </Link>
         </Button>
       </ListItem>

@@ -8,10 +8,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Chip from "@material-ui/core/Chip";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField";
+import Search from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -36,8 +34,14 @@ import LockIcon from "@material-ui/icons/Lock";
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PhotoIcon from "@material-ui/icons/Photo";
+import BlockIcon from "@material-ui/icons/Block";
 //utils
-import { dateFormat, timeMap, timeSpanMap } from "utils/timeUtils.js";
+import {
+  dateFormat,
+  timeMap,
+  timeSpanMap,
+  getStartTime
+} from "utils/timeUtils.js";
 import { get, post, postJSON } from "axiosSetting.js";
 import useForm from "react-hook-form";
 import DayPickerInput from "react-day-picker/DayPickerInput";
@@ -92,10 +96,15 @@ const useStyles = makeStyles({
     width: "100%",
     marginTop: "10px",
     marginBottom: "10px"
+  },
+  search: {
+    marginTop: "-12px"
+  },
+  timeChip: {
+    marginTop: "5px",
+    marginLeft: "5px"
   }
 });
-
-const startTime = [...Array(25)].map((value, index) => index + 16);
 
 const gymTypes = [
   "篮球",
@@ -127,10 +136,12 @@ const initialGymForm = {
 
 const initialOrderForm = {
   gymId: "",
-  startTime: 16, //开始时间
-  endTime: 1, //时长
+  startTime: 0, //开始时间
+  endTime: 0, //时长
   data: dateFormat(new Date(), datePattern)
 };
+
+let keywordInput = "";
 
 const initialState = {
   open: false, //drawer
@@ -142,7 +153,9 @@ const initialState = {
   gymForm: initialGymForm,
   gymId: "", //区分编辑和新增
   orderForm: initialOrderForm,
-  openDialog: false
+  openDialog: false,
+  available: [],
+  keyword: ""
 };
 
 const gymInfoReducer = (state, action) => {
@@ -220,6 +233,16 @@ const gymInfoReducer = (state, action) => {
         orderForm: initialOrderForm,
         openDialog: false
       };
+    case "SEARCH_KEYWORD":
+      return {
+        ...state,
+        keyword: payload
+      };
+    case "AVAILABLE_CHANGE":
+      return {
+        ...state,
+        available: payload
+      };
     default:
       return state;
   }
@@ -235,7 +258,6 @@ export default function GymInfo() {
 
   const [state, dispatch] = React.useReducer(gymInfoReducer, initialState);
   const { register, handleSubmit, errors } = useForm(); //gymForm
-
   React.useEffect(() => {
     async function fetchData() {
       const res = await get("/api/gym/allGyms");
@@ -251,8 +273,12 @@ export default function GymInfo() {
   }, []);
 
   const handleNextPage = async () => {
+    const url =
+      state.keyword !== ""
+        ? `/api/gym/keyword?keyword=${state.keyword}`
+        : "/api/gym/allGyms";
     if (state.isLastPage === false) {
-      const nextPage = await get("/api/gym/allGyms", {
+      const nextPage = await get(url, {
         page: state.pageNum + 1
       });
       if (nextPage && nextPage.code === 0) {
@@ -268,8 +294,12 @@ export default function GymInfo() {
   };
 
   const handlePrevPage = async () => {
+    const url =
+      state.keyword !== ""
+        ? `/api/gym/keyword?keyword=${state.keyword}`
+        : "/api/gym/allGyms";
     if (state.isFirstPage === false) {
-      const prevPage = await get("/api/gym/allGyms", {
+      const prevPage = await get(url, {
         page: state.pageNum - 1
       });
       if (prevPage && prevPage.code === 0) {
@@ -382,9 +412,10 @@ export default function GymInfo() {
       date: newDate,
       gymId: state.orderForm.gymId
     };
+    alert(JSON.stringify(body));
     const res = await postJSON("/api/order/available", body);
     if (res && res.code === 0) {
-      console.log(res.data);
+      dispatch({ type: "AVAILABLE_CHANGE", payload: res.data });
     }
   };
 
@@ -403,6 +434,27 @@ export default function GymInfo() {
         value: event.target.value
       }
     });
+  };
+
+  const handleKeywordChange = event => {
+    keywordInput = event.target.value;
+  };
+
+  const handleSearch = async () => {
+    dispatch({ type: "SEARCH_KEYWORD", payload: keywordInput });
+    const res = await get("/api/gym/keyword", { keyword: keywordInput });
+    if (res && res.code === 0) {
+      const { pageNum, list, isFirstPage, isLastPage } = res.data;
+      dispatch({
+        type: "PAGE_CHANGE",
+        payload: {
+          pageNum,
+          list,
+          isFirstPage,
+          isLastPage
+        }
+      });
+    }
   };
 
   var gymList = (
@@ -484,6 +536,20 @@ export default function GymInfo() {
 
   return (
     <React.Fragment>
+      <div className={classes.searchWrapper}>
+        <CustomInput
+          formControlProps={{
+            className: classes.search
+          }}
+          inputProps={{
+            placeholder: "搜索",
+            onChange: handleKeywordChange
+          }}
+        />
+        <Button color="white" justIcon round onClick={handleSearch}>
+          <Search />
+        </Button>
+      </div>
       {gymList}
       <GridContainer>
         <GridItem xs={10} sm={10} md={10}>
@@ -692,10 +758,29 @@ export default function GymInfo() {
               <GridItem>
                 <DayPickerInput
                   inputProps={{ readOnly: true }}
+                  dayPickerProps={{
+                    disabledDays: {
+                      before: new Date()
+                    }
+                  }}
                   format={datePattern}
                   classNames={classes.datePicker}
                   onDayChange={handleDateChange}
                 />
+              </GridItem>
+              <GridItem>
+                {state.available.map((data, key) => {
+                  return (
+                    <Chip
+                      disabled
+                      color="secondary"
+                      icon={<BlockIcon />}
+                      className={classes.timeChip}
+                      key={key}
+                      label={`${timeMap[data[0]]}-${timeMap[data[1]]}`}
+                    />
+                  );
+                })}
               </GridItem>
               <GridItem>
                 <FormControl className={classes.typeFormControl}>
@@ -704,7 +789,7 @@ export default function GymInfo() {
                     value={state.orderForm.startTime}
                     onChange={handleStartTimeChange}
                   >
-                    {startTime.map((data, key) => {
+                    {getStartTime(state.orderForm.date).map((data, key) => {
                       return (
                         <MenuItem key={key} value={data}>
                           {timeMap[data]}

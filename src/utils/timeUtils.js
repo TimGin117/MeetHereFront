@@ -91,8 +91,27 @@ const timeMap = [...Array(40)].map((value, index) => {
   }
 });
 
+const getStartTime = startDate => {
+  let date = new Date(startDate);
+  if (date.getDate() !== new Date().getDate())
+    return [...Array(24)].map((val, idx) => idx + 16);
+  date = new Date();
+  const start = Math.round(date.getHours() * 2 + date.getMinutes() / 60); //当前时间对应数字，8点对应16
+  //19：30前可以预约
+  if (start < 39) {
+    return [...Array(39 - start)].map((val, idx) => start + idx + 1);
+  } else return [];
+};
+
 const timeSpanMap = ["0", "30分钟", "60分钟", "90分钟", "120分钟"];
 
 const easyFormat = timestamp => timestamp.replace("T", " ");
 
-export { timestampFormat, timeMap, dateFormat, timeSpanMap, easyFormat };
+export {
+  timestampFormat,
+  timeMap,
+  dateFormat,
+  timeSpanMap,
+  easyFormat,
+  getStartTime
+};

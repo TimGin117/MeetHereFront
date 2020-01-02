@@ -30,9 +30,9 @@ export default function CustomDialog(props) {
     onSubmit,
     open,
     content = "content",
-    titleText = "Dialog",
-    confirmText = "Confirm",
-    closeText = "Close",
+    titleText = "对话",
+    confirmText = "确认",
+    closeText = "关闭",
     ...rest
   } = props;
 
