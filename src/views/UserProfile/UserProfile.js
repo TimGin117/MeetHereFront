@@ -195,7 +195,6 @@ export default function UserProfile() {
     dispatch({ type: "CLOSE_DIALOG", payload: dialog });
 
   const handleModifyNickname = async data => {
-    alert(data);
     dispatch({ type: "COMFIRM_NICKNAME_DIALOG" });
     const res = await post("/api/user/modifyNickname", {
       nickname: state.nicknameInput

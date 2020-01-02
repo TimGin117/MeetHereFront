@@ -380,8 +380,17 @@ export default function GymInfo() {
     dispatch({ type: "CLOSE_DIALOG" });
   };
 
-  const handleOpenDialog = gymId => () => {
+  const handleOpenDialog = gymId => async () => {
     dispatch({ type: "OPEN_DIALOG", payload: gymId });
+    const newDate = dateFormat(new Date(), datePattern);
+    const body = {
+      date: newDate,
+      gymId: gymId
+    };
+    const res = await postJSON("/api/order/available", body);
+    if (res && res.code === 0) {
+      dispatch({ type: "AVAILABLE_CHANGE", payload: res.data });
+    }
   };
 
   const handleAddOrder = async () => {
@@ -586,7 +595,7 @@ export default function GymInfo() {
         <form className={classes.form} onSubmit={handleSubmit(handleSubmitGym)}>
           <GridContainer>
             <GridItem xs={9} sm={9} md={9}>
-              <h3 className={classes.title}>新增场馆</h3>
+              <h3 className={classes.title}>场馆信息</h3>
             </GridItem>
             <GridItem xs={3} sm={3} md={3}>
               <Button

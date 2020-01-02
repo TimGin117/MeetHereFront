@@ -93,10 +93,10 @@ const timeMap = [...Array(40)].map((value, index) => {
 
 const getStartTime = startDate => {
   let date = new Date(startDate);
-  if (date.getDate() !== new Date().getDate())
+  const today = new Date();
+  if (date.getDate() !== today.getDate() || today.getHours() < 8)
     return [...Array(24)].map((val, idx) => idx + 16);
-  date = new Date();
-  const start = Math.round(date.getHours() * 2 + date.getMinutes() / 60); //当前时间对应数字，8点对应16
+  const start = Math.round(today.getHours() * 2 + today.getMinutes() / 60); //当前时间对应数字，8点对应16
   //19：30前可以预约
   if (start < 39) {
     return [...Array(39 - start)].map((val, idx) => start + idx + 1);

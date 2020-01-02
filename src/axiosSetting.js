@@ -32,9 +32,9 @@ axios.interceptors.response.use(
   },
   error => {
     if (error === undefined || error.code === "ECONNABORTED") {
-      window.alert("服务请求超时");
+      // window.alert("服务请求超时");
     } else {
-      window.alert(error);
+      // window.alert(error);
     }
     return Promise.reject(error);
   }
