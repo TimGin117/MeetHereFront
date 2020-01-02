@@ -117,12 +117,12 @@ export default function RegisterPage(props) {
     if (res && res.code === 0) rest.history.push("/login");
   };
 
-  //发送验证码请求,倒计时2分钟
+  //发送验证码请求,倒计时1分钟
   const handleSendCode = () => {
     if (errors.email) return;
     get("/api/user/sendCode", { email: state.email });
 
-    let countdown = 120;
+    let countdown = 60;
     const text = "s 重新发送";
 
     const timer = setInterval(() => {

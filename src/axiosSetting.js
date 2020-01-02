@@ -14,7 +14,7 @@ axios.interceptors.request.use(
     return config;
   },
   error => {
-    return Promise.error(error);
+    return Promise.reject(error);
   }
 );
 
@@ -46,6 +46,7 @@ const get = async (url, data) => {
     let response = await axios.get(url, { params: data });
     return response.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -54,6 +55,7 @@ const post = async (url, data) => {
     let response = await axios.post(url, qs.stringify(data));
     return response.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -65,6 +67,7 @@ const postJSON = async (url, data) => {
     });
     return response.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -77,6 +80,7 @@ const upload = async (url, data) => {
 
     return response.data;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };

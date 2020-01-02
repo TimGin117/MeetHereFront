@@ -19,6 +19,7 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
+import { post } from "axiosSetting.js";
 
 import styles from "assets/jss/material-dashboard-react/components/headerLinksStyle.js";
 
@@ -49,9 +50,14 @@ function AdminNavbarLinks(props) {
     setOpenProfile(null);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await post("/api/user/logout");
     window.sessionStorage.clear();
     props.history.push("/login");
+  };
+
+  const handleProfile = () => {
+    props.history.push("/user/profile");
   };
 
   return (
@@ -189,7 +195,7 @@ function AdminNavbarLinks(props) {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleProfile}
                       className={classes.dropdownItem}
                     >
                       Profile

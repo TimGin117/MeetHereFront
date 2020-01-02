@@ -56,4 +56,43 @@ const timestampFormat = time => {
   }
 };
 
-export { timestampFormat };
+const dateFormat = (date, fmt) => {
+  var o = {
+    "M+": date.getMonth() + 1, //月份
+    "d+": date.getDate(), //日
+    "h+": date.getHours(), //小时
+    "m+": date.getMinutes(), //分
+    "s+": date.getSeconds(), //秒
+    "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+    S: date.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(
+      RegExp.$1,
+      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+    );
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) {
+      fmt = fmt.replace(
+        RegExp.$1,
+        RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length)
+      );
+    }
+  }
+  return fmt;
+};
+
+const timeMap = [...Array(40)].map((value, index) => {
+  if (index < 16) return index;
+  else {
+    if (index % 2 === 0) return index / 2 + ":00";
+    else return (index - 1) / 2 + ":30";
+  }
+});
+
+const timeSpanMap = ["0", "30分钟", "60分钟", "90分钟", "120分钟"];
+
+const easyFormat = timestamp => timestamp.replace("T", " ");
+
+export { timestampFormat, timeMap, dateFormat, timeSpanMap, easyFormat };

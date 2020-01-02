@@ -232,11 +232,11 @@ export default function UserProfile() {
   const handleToggle = key => () =>
     dispatch({ type: "TOGGLE_BUTTON", payload: { key: key } });
 
-  //发送验证码请求,倒计时2分钟
+  //发送验证码请求,倒计时1分钟
   const handleSendCode = () => {
     get("/api/user/sendCode", { email: state.email });
 
-    let countdown = 120;
+    let countdown = 60;
     const text = "s 重新发送";
 
     const timer = setInterval(() => {
@@ -252,8 +252,8 @@ export default function UserProfile() {
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={10}>
           <Card profile>
             <CardAvatar profile>
               <a href="#avatar" onClick={openProfileChooser}>

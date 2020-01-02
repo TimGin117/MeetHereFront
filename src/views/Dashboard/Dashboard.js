@@ -11,7 +11,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 //components
-import Muted from "components/Typography/Muted.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
@@ -28,7 +27,7 @@ import CanCelIcon from "@material-ui/icons/Cancel";
 //utils
 import { defaultUser } from "utils/defaultUtils.js";
 import { timestampFormat } from "utils/timeUtils.js";
-import { get, postJSON } from "axiosSetting.js";
+import { get, post, postJSON } from "axiosSetting.js";
 //css
 import bg1 from "assets/img/bg.jpg";
 import bg2 from "assets/img/bg2.jpg";
@@ -115,6 +114,14 @@ const dashBoardReducer = (state, action) => {
   console.log(state);
   const { type, payload } = action;
   switch (type) {
+    case "PAGE_CHANGE":
+      return {
+        ...state,
+        list: payload.list,
+        isFirstPage: payload.isFirstPage,
+        isLastPage: payload.isLastPage,
+        pageNum: payload.pageNum
+      };
     case "INPUT_CHANGE":
       return {
         ...state,
@@ -146,18 +153,23 @@ const dashBoardReducer = (state, action) => {
         ...state,
         open: false
       };
-    case "PAGE_CHANGE":
-      return {
-        ...state,
-        list: payload.list,
-        isFirstPage: payload.isFirstPage,
-        isLastPage: payload.isLastPage,
-        pageNum: payload.pageNum
-      };
     case "DELETE_NEWS":
       return {
         ...state,
         list: state.list.filter(data => data.newsId !== payload.newsId)
+      };
+    case "PUBLISH_NEWS":
+      return {
+        ...state,
+        list: [payload, ...state.list]
+      };
+    case "UPDATE_NEWS":
+      return {
+        ...state,
+        list: [
+          payload,
+          ...state.list.filter(data => data.newsId !== payload.newsId)
+        ]
       };
     default:
       return state;
@@ -175,7 +187,6 @@ export default function Dashboard(props) {
   const [state, dispatch] = React.useReducer(dashBoardReducer, initialState);
   const editorInstance = React.useRef(null);
 
-  //只在list改变时触发
   React.useEffect(() => {
     async function fetchData() {
       const res = await get("/api/news/all");
@@ -200,9 +211,12 @@ export default function Dashboard(props) {
     dispatch({ type: "OPEN_POST_DRAWER" });
   };
 
-  const handleDeleteButton = newsId => event => {
+  const handleDeleteButton = newsId => async event => {
     event.stopPropagation();
-    dispatch({ type: "DELETE_NEWS", payload: { newsId } });
+    const res = await post("/api/news/deleteNews", { newsId: newsId });
+    if (res && res.code === 0) {
+      dispatch({ type: "DELETE_NEWS", payload: { newsId } });
+    }
   };
 
   const handleChange = key => event => {
@@ -222,34 +236,42 @@ export default function Dashboard(props) {
     dispatch({ type: "CLOSE_DRAWER" });
   };
 
+  //add and update
   const handlePublishNews = async () => {
     if (state.editorState.isEmpty()) {
       editorInstance.current.requestFocus();
       return;
     }
     dispatch({ type: "CLOSE_DRAWER" });
-
+    let res;
     if (state.newsId === "") {
       const body = {
         title: state.title,
         content: state.editorState.toHTML()
       };
-      await postJSON("/api/news/addNews", body);
+      res = await postJSON("/api/news/addNews", body);
+      if (res && res.code === 0) {
+        alert("发布成功");
+        dispatch({ type: "PUBLISH_NEWS", payload: res.data });
+      }
     } else {
       const body = {
         newsId: state.newsId,
         title: state.title,
         content: state.editorState.toHTML()
       };
-      await postJSON("/api/news/updateNews", body);
+      res = await postJSON("/api/news/updateNews", body);
+      if (res && res.code === 0) {
+        alert("发布成功");
+        dispatch({ type: "UPDATE_NEWS", payload: res.data });
+      }
     }
-    alert("发布成功");
   };
 
-  const handleNewsDisplay = newsId => () => {
+  const handleNewsDisplay = data => () => {
     props.history.push({
       pathname: "/user/display",
-      state: { newsId: newsId }
+      state: data
     });
   };
 
@@ -293,7 +315,7 @@ export default function Dashboard(props) {
         return (
           <GridItem key={data.newsId} xs={12} sm={12} md={10}>
             <Card className={classes.newsCard}>
-              <CardActionArea onClick={handleNewsDisplay(data.newsId)}>
+              <CardActionArea onClick={handleNewsDisplay(data)}>
                 <GridContainer>
                   <GridItem xs={3} sm={3} md={3}>
                     <CardMedia
