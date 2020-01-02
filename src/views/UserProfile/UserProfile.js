@@ -270,7 +270,7 @@ export default function UserProfile() {
             <CardBody profile>
               <Card>
                 <CardHeader color="primary">
-                  <h4 className={classes.cardTitleWhite}>My Profile</h4>
+                  <h4 className={classes.cardTitleWhite}>我的信息</h4>
                 </CardHeader>
                 <CardBody>
                   <List component="div" role="list">

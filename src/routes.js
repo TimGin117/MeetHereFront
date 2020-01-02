@@ -17,48 +17,48 @@ import OrderManagement from "views/OrderManagement/OrderManagement.js";
 const adminRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "首页",
     icon: Dashboard,
     component: DashboardPage,
     layout: "/user"
   },
   {
     path: "/display",
-    name: "News Display",
+    name: "新闻",
     component: NewsDisplay,
     layout: "/user"
   },
   {
     path: "/gymInfo",
-    name: "Gym Info",
+    name: "场馆资讯",
     icon: BusinessIcon,
     component: GymInfo,
     layout: "/user"
   },
   {
     path: "/orderInfo",
-    name: "Order Info",
+    name: "我的订单",
     icon: ListAltIcon,
     component: OrderInfo,
     layout: "/user"
   },
   {
     path: "/orderManagement",
-    name: "Order Management",
+    name: "订单管理",
     icon: FormatListBulletedIcon,
     component: OrderManagement,
     layout: "/user"
   },
   {
     path: "/userManagement",
-    name: "User Management",
+    name: "用户管理",
     icon: FaceIcon,
     component: UserManagement,
     layout: "/user"
   },
   {
     path: "/profile",
-    name: "User Profile",
+    name: "我的信息",
     icon: Person,
     component: UserProfilePage,
     layout: "/user"
@@ -68,34 +68,34 @@ const adminRoutes = [
 const userRoutes = [
   {
     path: "/dashboard",
-    name: "Dashboard",
+    name: "首页",
     icon: Dashboard,
     component: DashboardPage,
     layout: "/user"
   },
   {
     path: "/display",
-    name: "News Display",
+    name: "新闻",
     component: NewsDisplay,
     layout: "/user"
   },
   {
     path: "/gyminfo",
-    name: "Gym Info",
+    name: "场馆资讯",
     icon: BusinessIcon,
     component: GymInfo,
     layout: "/user"
   },
   {
     path: "/orderInfo",
-    name: "Order Info",
+    name: "我的订单",
     icon: ListAltIcon,
     component: OrderInfo,
     layout: "/user"
   },
   {
     path: "/profile",
-    name: "User Profile",
+    name: "我的信息",
     icon: Person,
     component: UserProfilePage,
     layout: "/user"
