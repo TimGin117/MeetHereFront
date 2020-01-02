@@ -138,7 +138,7 @@ const initialOrderForm = {
   gymId: "",
   startTime: 0, //开始时间
   endTime: 0, //时长
-  data: dateFormat(new Date(), datePattern)
+  date: dateFormat(new Date(), datePattern)
 };
 
 let keywordInput = "";
@@ -230,8 +230,8 @@ const gymInfoReducer = (state, action) => {
     case "CLOSE_DIALOG":
       return {
         ...state,
-        orderForm: initialOrderForm,
-        openDialog: false
+        openDialog: false,
+        orderForm: initialOrderForm
       };
     case "SEARCH_KEYWORD":
       return {
@@ -412,7 +412,6 @@ export default function GymInfo() {
       date: newDate,
       gymId: state.orderForm.gymId
     };
-    alert(JSON.stringify(body));
     const res = await postJSON("/api/order/available", body);
     if (res && res.code === 0) {
       dispatch({ type: "AVAILABLE_CHANGE", payload: res.data });
@@ -763,6 +762,7 @@ export default function GymInfo() {
                       before: new Date()
                     }
                   }}
+                  value={state.orderForm.date}
                   format={datePattern}
                   classNames={classes.datePicker}
                   onDayChange={handleDateChange}

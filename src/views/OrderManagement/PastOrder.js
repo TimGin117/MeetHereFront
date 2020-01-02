@@ -132,7 +132,7 @@ export default function AllOrder() {
                   <TableCell align="left">订单号码</TableCell>
                   <TableCell align="left">用户邮箱</TableCell>
                   <TableCell align="left">预约场馆</TableCell>
-                  <TableCell align="left">运动场地</TableCell>
+                  <TableCell align="left">场馆类型</TableCell>
                   <TableCell align="left">结束时间</TableCell>
                   <TableCell align="left">订单评价</TableCell>
                 </TableRow>
@@ -145,7 +145,7 @@ export default function AllOrder() {
                     </TableCell>
                     <TableCell align="left">{data.userEmail}</TableCell>
                     <TableCell align="left">{data.gym.name}</TableCell>
-                    <TableCell align="left">{data.gym.address}</TableCell>
+                    <TableCell align="left">{data.gym.type}</TableCell>
                     <TableCell align="left">
                       {easyFormat(data.endTime)}
                     </TableCell>
