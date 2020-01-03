@@ -15,8 +15,23 @@
 
 + `Visual Studio Code` 1.41.1
 
-+ `react` (基于 `material-kit-react` 和 `material-dashboard-react` 两个模板)
++ 开发环境 `node` 10.14.0 `npm` 6.11.3 
 
++ 脚手架 `create-react-app`
+
++ 开发框架 `react` 16.12.0 使用 `react-hooks`代替传统组件类进行开发
+
++ UI框架 `Material Design`
+
++ 表单验证框架 `react-hook-form` 
+
++ js静态类型检查 `Prop-Types`
+
++ 代码风格检查 `ESLint`
+
++ 路由框架 `react-router`
+
++ ajax请求 `axios`
 
 ## 项目成品截图
 
