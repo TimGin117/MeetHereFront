@@ -12,7 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Pagination from "components/Pagination/Pagination.js";
-import { get, post } from "axiosSetting.js";
+import { get } from "axiosSetting.js";
 import { easyFormat } from "utils/timeUtils.js";
 
 const useStyles = makeStyles(theme => ({

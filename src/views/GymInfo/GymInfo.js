@@ -621,7 +621,7 @@ export default function GymInfo() {
             <GridItem md={8}>
               <CustomInput
                 id="name"
-                labelText="Name"
+                labelText="名字"
                 formControlProps={{
                   fullWidth: true
                 }}
@@ -630,7 +630,7 @@ export default function GymInfo() {
                   type: "text",
                   name: "name",
                   inputRef: register({
-                    required: "this is required"
+                    required: "不能为空"
                   }),
                   defaultValue: state.gymForm.name,
                   startAdornment: (
@@ -646,7 +646,7 @@ export default function GymInfo() {
               <CustomInput
                 id="description"
                 error={!!errors.description}
-                labelText="Description"
+                labelText="描述"
                 formControlProps={{
                   fullWidth: true
                 }}
@@ -655,7 +655,7 @@ export default function GymInfo() {
                   name: "description",
                   defaultValue: state.gymForm.description,
                   inputRef: register({
-                    required: "this is required"
+                    required: "不能为空"
                   }),
                   startAdornment: (
                     <InputAdornment position="start">
@@ -669,7 +669,7 @@ export default function GymInfo() {
             <GridItem md={8}>
               <CustomInput
                 id="address"
-                labelText="Address"
+                labelText="地址"
                 formControlProps={{
                   fullWidth: true
                 }}
@@ -679,7 +679,7 @@ export default function GymInfo() {
                   name: "address",
                   defaultValue: state.gymForm.address,
                   inputRef: register({
-                    required: "this is required"
+                    required: "不能为空"
                   }),
                   startAdornment: (
                     <InputAdornment position="start">
@@ -693,7 +693,7 @@ export default function GymInfo() {
             <GridItem md={8}>
               <CustomInput
                 id="photo"
-                labelText="Photo"
+                labelText="图片"
                 formControlProps={{
                   fullWidth: true
                 }}
@@ -703,7 +703,7 @@ export default function GymInfo() {
                   name: "photo",
                   defaultValue: state.gymForm.photo,
                   inputRef: register({
-                    required: "this is required"
+                    required: "不能为空"
                   }),
                   startAdornment: (
                     <InputAdornment position="start">
@@ -717,7 +717,7 @@ export default function GymInfo() {
             <GridItem md={8}>
               <CustomInput
                 id="rent"
-                labelText="Rent"
+                labelText="租金"
                 formControlProps={{
                   fullWidth: true
                 }}
@@ -727,7 +727,11 @@ export default function GymInfo() {
                   name: "rent",
                   defaultValue: state.gymForm.rent,
                   inputRef: register({
-                    required: "this is required"
+                    required: "不能为空",
+                    min: {
+                      value: 0,
+                      message: "租金不能为负"
+                    }
                   }),
                   startAdornment: (
                     <InputAdornment position="start">
@@ -740,7 +744,7 @@ export default function GymInfo() {
             </GridItem>
             <GridItem md={8}>
               <FormControl className={classes.typeFormControl}>
-                <InputLabel>Type</InputLabel>
+                <InputLabel>类型</InputLabel>
                 <Select value={state.gymForm.type} onChange={handleTypeChange}>
                   {gymTypes.map((data, key) => {
                     return (

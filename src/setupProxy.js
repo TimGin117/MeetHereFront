@@ -5,9 +5,10 @@ module.exports = function(app) {
   console.log("proxy");
   app.use(
     proxy("/api", {
-      target: "http://localhost:8080",
+      target: "http://120.77.176.55:8080",
       changeOrigin: true,
       secure: false,
+      xfwd: true,
       pathRewrite: {
         "^/api": ""
       }

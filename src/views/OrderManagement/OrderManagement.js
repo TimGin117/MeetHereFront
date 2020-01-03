@@ -1,6 +1,5 @@
 import React from "react";
 //
-import { makeStyles } from "@material-ui/core/styles";
 import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import AllOrder from "views/OrderManagement/AllOrder.js";
 import CurrentOrder from "views/OrderManagement/CurrentOrder.js";

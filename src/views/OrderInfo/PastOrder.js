@@ -205,7 +205,6 @@ export default function AllOrder() {
     }
   };
 
-  const [value, setValue] = React.useState(2);
   return (
     <React.Fragment>
       <GridContainer>

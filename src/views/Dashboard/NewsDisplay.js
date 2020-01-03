@@ -151,14 +151,14 @@ export default function NewsDisplay({ history, location }) {
   const nicknameAndTime = `${nickname}${"   "}${timestampFormat(updateTime)}`;
 
   React.useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const res = await get("/api/news/one", { newsId: newsId });
       if (res && res.code === 0) {
         dispatch({ type: "GET_COMMENT", payload: res.data.comment });
       }
-    }
+    };
     fetchData();
-  }, []);
+  }, [newsId]);
 
   const handleClickReply = (nickname, commentId) => () => {
     dispatch({

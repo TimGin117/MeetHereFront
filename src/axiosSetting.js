@@ -1,7 +1,8 @@
 import axios from "axios";
 import qs from "qs";
 
-axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "http://www.ecnuonion.club";
 axios.defaults.timeout = 10000;
 axios.defaults.headers.post["Content-Type"] =
   "application/x-www-form-urlencoded";

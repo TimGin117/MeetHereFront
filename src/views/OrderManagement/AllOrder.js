@@ -8,7 +8,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -16,7 +15,7 @@ import Select from "@material-ui/core/Select";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Pagination from "components/Pagination/Pagination.js";
-import { get, post } from "axiosSetting.js";
+import { get } from "axiosSetting.js";
 import { easyFormat } from "utils/timeUtils.js";
 
 const useStyles = makeStyles(theme => ({

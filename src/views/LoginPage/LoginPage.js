@@ -103,7 +103,7 @@ export default function LoginPage(props) {
               <Card className={classes[cardAnimaton]}>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    <h3>登陆</h3>
+                    <h3>登录</h3>
                   </CardHeader>
                   <CardBody>
                     <CustomInput
