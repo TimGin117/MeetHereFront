@@ -249,6 +249,12 @@ export default function UserProfile() {
     }, 1000);
   };
 
+  const handleCheckPassword = value => {
+    if (/^\d+$/.test(value)) return "不能为纯数字";
+    if (/^[A-Za-z]+$/.test(value)) return "不能为纯字母";
+    return /^[A-Za-z0-9]+$/.test(value);
+  };
+
   return (
     <div>
       <GridContainer justify="center">
@@ -330,10 +336,10 @@ export default function UserProfile() {
               placeholder: "新昵称(不超过20位)",
               name: "nickname",
               inputRef: nicknameRegister({
-                required: "thie is required",
+                required: "不能为空",
                 maxLength: {
                   value: 20,
-                  message: "your nickname is too long"
+                  message: "昵称太长"
                 }
               }),
               onChange: handleChange("nicknameInput")
@@ -406,7 +412,8 @@ export default function UserProfile() {
                   maxLength: {
                     value: 16,
                     message: "密码太长"
-                  }
+                  },
+                  validate: handleCheckPassword
                 }),
                 startAdornment: (
                   <InputAdornment position="start">

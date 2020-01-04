@@ -145,6 +145,12 @@ export default function RegisterPage(props) {
     return !isRegistered || "邮箱已被注册";
   };
 
+  const handleCheckPassword = value => {
+    if (/^\d+$/.test(value)) return "不能为纯数字";
+    if (/^[A-Za-z]+$/.test(value)) return "不能为纯字母";
+    return /^[A-Za-z0-9]+$/.test(value);
+  };
+
   const handleCheckRepeatPassword = value => {
     let password = state.password || "";
     return value === password || "两次密码不一致";
@@ -281,7 +287,7 @@ export default function RegisterPage(props) {
                       error={!!errors.password}
                       inputProps={{
                         type: state.showPassword ? "text" : "password",
-                        placeholder: "密码（6-16位数字、字母）",
+                        placeholder: "密码（6-16位数字和字母组合）",
                         name: "password",
                         inputRef: register({
                           required: "不能为空",
@@ -292,8 +298,10 @@ export default function RegisterPage(props) {
                           maxLength: {
                             value: 16,
                             message: "密码太长"
-                          }
+                          },
+                          validate: handleCheckPassword
                         }),
+
                         startAdornment: (
                           <InputAdornment position="start">
                             <Icon className={classes.inputIconsColor}>
